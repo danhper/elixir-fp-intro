@@ -1,0 +1,450 @@
+section
+  section
+    h2
+      | Functional programming
+      br
+      | with Elixir
+    h3
+      | Daniel Perez
+      br
+      small
+        span
+          i.fa.fa-github.fa-margin
+          a(href="https://github.com/tuvistavie" target="_blank") tuvistavie
+        br
+        span
+          | CTO@
+          a(href="http://claudetech.com" target="_blank") Claude Tech
+    h4
+      a(href="http://tuvistavie.com/elixir-fp-intro" target="_blank") http://bit.ly/elixir-fp-intro
+
+section
+  section
+    h3 Today's topic
+    h2 Functional programming with Elixir
+    .fragment
+      h4 Target audience
+      ul
+        li Programming experience
+        li Little or now experience with functional programming
+        li Understanding of Elixir basics
+
+  section(data-transition="fade-in slide-out")
+    h3 Today's topic
+    h2 Functional programming with Elixir
+    h4 Outline
+    ol
+      li Overview of the functional paradigm
+      li Elixir functional programming features
+      li State management in Elixir
+
+section
+  section
+    h1 Functional paradigm
+  section
+    h2 Programming paradigm
+    h3 A "way of programming"
+    ul
+      li Way of reasonning
+      li Way of structuring code
+  section
+    h2 A few programming paradigms
+    ul
+      li Imperative programming (C, Fortran, Basic)
+      li Functional programming (Elixir, Haskell, ML)
+      li Object oriented programming (SmallTalk, Java)
+      li Logic programming (Prolog, Datalog)
+      li Symbol programming (Lisp&co)
+
+  section
+    h2 Multi paradigms
+    p
+      | A lot of language support multiple programming paradigms
+      br
+      | e.g. Scala supports imperative, functional, object oriented
+    p
+      | A lot of languages support some functional features
+      br
+      | e.g. High order functions are used in many languages
+
+  section
+    h2 Imperative programming
+    ul
+      li Focus on the "how"
+      li Program is built by mutating state
+      li Conditions, loops and functional calls for control flow
+    h2 Functional programming
+    ul
+      li Set of transformations through functions
+      li Normally no state change
+      li Control flow involves recursion
+
+  section
+    h2 Imperative programming
+    pre: code.c
+      include ./snippets/factorial.c
+    h2 Functional programming
+    pre: code.elixir
+      include ./snippets/factorial.exs
+
+  section
+    h2 Functional programming
+    h4 Definition
+    h3 Programming based on functions without side effects
+
+  section
+    h2 Merits of functional programming
+    ul
+      li Easier to test
+      li Needs less context to understand
+      li Higher level of abstraction
+
+  section
+    h2 Unsuited for functional programming
+    p Tasks with a lot of mutations are not appropriate for FP
+    ul
+      li Large data structures
+      li Many mutations in the data structures
+    p Matrix operations is a good example
+
+section
+  section
+    h2 Overview of functional features in Elixir
+    ul
+      li Pattern matching
+      li Recursion
+      li High order functions
+      li Immutable data structures
+
+section
+  section
+    h1 Pattern matching
+  section
+    h2 What is pattern matching?
+    p Matching a source expression with a target expression
+    ol
+      li Try to find a way to make the target match with the source
+      li Bind the target operand variables with source operand values
+
+  section
+    h2 Match operator
+    h4 In Elixir <code>=</code> means "match", not "assignment"
+    pre: code.erlang
+      include ./snippets/match_op.ex
+
+  section
+    h2 Match operator
+    pre: code.elixir
+      include ./snippets/match_op_example.ex
+
+  section
+    h2 Match context
+    p Semantic changes depending on the context
+    p When pattern matching, target operand is in match context
+    ul
+      li Variable name in normal context returns its value
+      li Variable name in match context will be bound
+
+  section
+    h2 Different match contexts
+    pre: code.elixir
+      include ./snippets/match_context.exs
+
+  section
+    h2 Enough to implement <code>if</code>/<code>else</code>
+    pre: code.elixir
+      include ./snippets/if_macro.exs
+
+  section
+    h2 Matching with guards
+    p
+      | Using predicates when pattern matching, replacing the need for <code>else if</code>
+    pre: code.elixir
+      include ./snippets/guards.exs
+    p.fragment Check docs for usable expressions
+
+  section
+    h2 Pinning variables
+    p The following is a common pattern
+    pre: code.elixir
+      include ./snippets/nopin_when.exs
+    .fragment
+      p Elixir allow to write it as
+      pre: code.elixir
+        include ./snippets/pin.exs
+
+  section
+    h2 Pattern matching order of evaluation
+    p
+      | Match patterns are evaluated simultaneously
+      br
+      | therefore the following will not work
+    pre: code.elixir
+      include ./snippets/pattern_matching_order.exs
+
+section
+  section
+    h1 Recursion
+  section
+    h2 Recursive function
+    h3 A function that directly or indirectly calls itself
+    p Recursive functions usually have a
+    ul
+      li base case: the case where the function stop recursing
+      li recursion case: the case where the function keep recursing
+
+  section
+    h2 The factorial function
+    ul
+      li When <code>n = 0</code>, return <code>1</code>
+      li Otherwise, return <code>n * factorial(n - 1)</code>
+    p This translates into
+    pre: code.elixir
+      include ./snippets/factorial.exs
+
+  section
+    h2 The <code>sum</code> function
+    ul
+      li When list is empty, return <code>0</code>
+      li When list is not empty, return <code>current_value + sum(rest_of_the_list)</code>
+    p which translates into
+    pre: code.elixir
+      include ./snippets/sum.exs
+
+  section
+    h2 Execution of the <code>sum</code>function
+    p The result of the recursive call is not enough to compute the function final result
+    pre
+      | sum([1, 2, 3])
+      | 1 + sum([2, 3])
+      | 1 + 2 + sum([3])
+      | 1 + 2 + 3 + sum([])
+      | 1 + 2 + 3 + 0
+      | 1 + 2 + 3
+      | 1 + 5
+      | 6
+    p Stack increases at each iteration
+
+  section
+    h2 Tail recursion
+    p Make the recursive call the last expression of the function
+    h4 Non tail-recursive
+    pre: code.elixir
+      include ./snippets/sum.exs
+    h4 Tail-recursive
+    pre: code.elixir
+      include ./snippets/sum_tailrec.exs
+
+  section
+    h2 Tail call optimization
+    p
+      | Function calls normally accumulate on the stack
+      br
+      | Tail calls optimization avoids increasing the size of the stack when
+      | a function call is a tail call
+
+  section
+    h2 Normal function call
+    h4 All the function calls stay in the stack
+    pre: code.elixir
+      include ./snippets/with_stack.ex
+
+  section
+    h2 Tail function calls
+    h4 Tail calls do not remain in the stack
+    pre: code.elixir
+      include ./snippets/no_stack.ex
+
+  section
+    h2 Tail call optimization
+    p The following code will not stack overflow
+    pre: code.elixir
+      include ./snippets/sample_infinite_loop.exs
+
+section
+  section
+    h1 High order functions
+
+  section
+    h2 High order functions motivation
+    p We want to abstract common patterns
+    h3 Sum function
+    pre: code.elixir
+      include ./snippets/sum.exs
+    h3 Count function
+    pre: code.elixir
+      include ./snippets/count.exs
+
+  section
+    h2 Abstracting common patterns
+    h4 <code>sum</code> and <code>count</code> both:
+    ul
+      li recurse on a list
+      li accumulate a result by applying a function
+    p.fragment This is often called <code>reduce</code> or <code>fold</code>
+
+  section
+    h2 First class functions
+    p Functions can be used as normal values
+    ul
+      li saved into a variable
+      li used as function parameters
+      li used as return value
+    p.fragment Many languages implement this feature
+
+  section
+    h2 Implementing a high order function
+    p The reduce function could be implemented as follow
+    pre: code.elixir
+      include ./snippets/reduce.exs
+    p <code>sum</code> and <code>count</code> can then be implemented as
+    pre: code.elixir
+      include ./snippets/sum_count.exs
+
+  section
+    h2 Common high order functions
+    ul
+      li <code>map</code>: applies a function on all elements of a list
+      li <code>filter</code>: filters a list using a predicate function
+      li <code>reduce</code>: reduces a list to a scalar using a binary function
+
+section
+  section
+    h1 Immutability
+
+  section
+    h2 Mutable vs Immutable
+    h4 regarding data structures
+    ul
+      li operations on a mutable structure will modify it
+      li operations on an immutable structure will return a new updated one
+
+  section
+    h2 Immutable pros/cons
+    h3 pros
+    p Code usually easier to reason on and debug
+    h3 cons
+    p Performance can suffer (especially on large structures)
+
+  section
+    h2 Mutability in Elixir
+    p All data structures in Elixir are immutable
+    pre: code.elixir
+      include ./snippets/structures.exs
+
+  section
+    h2 Common mistake
+    p When getting started, is easy to forget about immutability
+    pre: code.elixir
+      include ./snippets/common_mistake.exs
+
+section
+  section
+    h1 A stateful world
+
+  section
+    h2 Issues about immutability
+    ul
+      li a lot of real world task need state
+      li state means mutation
+      li structures cannot be mutated
+
+  section
+    h2 State in Elixir
+    ul
+      li Elixir is immutable
+      li Use <code>Agent</code> when you need state
+      li <code>Agent</code> is a wrapper around <code>GenServer</code>
+      li.fragment What is going on in <code>GenServer</code>?
+
+  section
+    h2 A short outline
+    ul
+      li (re)view OTP building blocks
+      li implement simple stateful server
+      li generalize our stateful server
+
+  section
+    h3 Language concurrency builtins
+    ul
+      li <code>spawn</code>
+      li <code>send</code>
+      li <code>receive</code>
+      li <code>monitor</code>
+      li <code>link</code>
+
+  section
+    h2 Spawning a process
+    pre: code.elixir
+      include ./snippets/simple_spawn.exs
+
+  section
+    h2 Communicate with a process
+    pre: code.elixir
+      include ./snippets/basic_send_receive.exs
+
+  section
+    h2 Creating a server
+    pre: code.elixir
+      include ./snippets/ping_server.exs
+
+  section
+    h3 Stateful arguments
+    pre: code.elixir
+      | def loop(some_int) do
+      |   receive do
+      |     {:add, value} ->
+      |       loop(some_int + value)
+      |   end
+      | end
+
+  section
+    h3 Creating a <code>Stack</code> server
+    pre: code.elixir
+      include ./snippets/stack_server_1.exs
+
+  section
+    h3 <code>push</code> function
+    pre: code.elixir
+      include ./snippets/stack_server_1_push.exs
+
+  section
+    h3 Making <code>pop</code> synchronous
+    pre: code.elixir
+      include ./snippets/stack_server_1_pop.exs
+
+  section
+    h2 Making the server generic
+    ul
+      li A server has a state
+      li A server uses a main loop
+      li A server can handle sync/async requests
+
+  section
+    h3 Refactoring our main loop
+    pre: code.elixir
+      include ./snippets/gen_server_loop.exs
+
+  section
+    h3 Extracting logic of <code>push</code> and <code>pop</code>
+    pre: code.elixir
+      include ./snippets/stack_server_call_cast.exs
+
+  //- section
+  //-   h3 Logic to start <code>ClumsyGenServer</code>
+  //-   pre: code.elixir
+  //-     include ./snippets/clumsy_gen_server.exs
+  //-
+
+  section
+    h3 Rewriting <code>push</code> and <code>pop</code>
+    pre: code.elixir
+      include ./snippets/stack_server_2.exs
+
+section
+  h2 Wrap up
+  ul
+    li Functional programming has plenty of useful concepts
+    li Elixir uses and implements many of these
+    li State can be modeled using servers and message passing
+    li.fragment Do not implement your own <code>GenServer</code>

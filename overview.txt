@@ -1,0 +1,49 @@
+1. Introduction
+  a. Title
+  b. Goal
+    1. Target audience
+    2. Outline
+2. Paradigm
+  a. What is a paradigm?
+  b. Major paradigms overview
+  c. Imperative vs functional
+  d. Merits of functional
+  e. Demerits of functional
+3. Elixir functional features
+  a. Pattern matching: if/else
+    1. What is pattern matching?
+    2. Match operator
+    3. Match context
+    4. `when`
+    5. pin variable
+    6. order of evaluation
+  b. Recursion: for/while
+    1. Definition
+    2. Example (factorial)
+    3. Example with pattern matching (sum)
+    4. Tail call recursion
+    5. Tail call optimization
+  c. High order functions
+    1. Issue to be solved
+    2. First class functions
+    3. Patterns in recursion
+    4. `reduce` implementation
+    5. A few high order functions
+  d. Immutability
+    1. Mutable vs immutable
+    2. Pros/cons of immutability
+    3. Mutability in Elixir
+    4. Common mistake example
+    5. Reassignment behavior
+4. Handling state
+  a. Main issue
+  b. Outline
+  c. OTP building blocks
+  d. Simple server
+  e. Keep state in arguments
+  f. Stack server
+  g. Queue server
+  h. Abstracting patterns
+  i. Generic Server
+  j. Agent
+5. Wrap up
