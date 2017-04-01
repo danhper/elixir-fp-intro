@@ -16,12 +16,15 @@ section
           | CTO@
           a(href="http://claudetech.com" target="_blank") Claude Tech
     h4
-      a(href="http://tuvistavie.com/elixir-fp-intro" target="_blank") http://bit.ly/elixir-fp-intro
+      a(href="http://tuvistavie.com/slides/elixir-fp-intro" target="_blank") http://bit.ly/elixir-fp-intro
 
 section
   section
     h3 Today's topic
-    h2 Functional programming with Elixir
+    h2
+      | Functional programming
+      br
+      | with Elixir
     .fragment
       h4 Target audience
       ul
@@ -31,7 +34,10 @@ section
 
   section(data-transition="fade-in slide-out")
     h3 Today's topic
-    h2 Functional programming with Elixir
+    h2
+      | Functional programming
+      br
+      | with Elixir
     h4 Outline
     ol
       li Overview of the functional paradigm
@@ -53,8 +59,7 @@ section
       li Imperative programming (C, Fortran, Basic)
       li Functional programming (Elixir, Haskell, ML)
       li Object oriented programming (SmallTalk, Java)
-      li Logic programming (Prolog, Datalog)
-      li Symbol programming (Lisp&co)
+      li Many others: process oriented, logic
 
   section
     h2 Multi paradigms
@@ -76,28 +81,29 @@ section
     h2 Functional programming
     ul
       li Set of transformations through functions
-      li Normally no state change
+      li Transformations instead of mutations
       li Control flow involves recursion
 
-  section
-    h2 Imperative programming
-    pre: code.c
-      include ./snippets/factorial.c
-    h2 Functional programming
-    pre: code.elixir
-      include ./snippets/factorial.exs
+  //- section
+  //-   h2 Imperative programming
+  //-   pre: code.c
+  //-     include ./snippets/factorial.c
+  //-   h2 Functional programming
+  //-   pre: code.elixir
+  //-     include ./snippets/factorial.exs
+  //-
 
   section
     h2 Functional programming
     h4 Definition
-    h3 Programming based on functions without side effects
+    h3 Programming based on transformations through functions
 
   section
     h2 Merits of functional programming
     ul
-      li Easier to test
+      li Easier to reason about
       li Needs less context to understand
-      li Higher level of abstraction
+      li Plays well with concurrent programming
 
   section
     h2 Unsuited for functional programming
@@ -123,8 +129,8 @@ section
     h2 What is pattern matching?
     p Matching a source expression with a target expression
     ol
-      li Try to find a way to make the target match with the source
-      li Bind the target operand variables with source operand values
+      li Match the target with the source
+      li Bind the source values to the target variables
 
   section
     h2 Match operator
@@ -319,12 +325,12 @@ section
       li operations on a mutable structure will modify it
       li operations on an immutable structure will return a new updated one
 
-  section
-    h2 Immutable pros/cons
-    h3 pros
-    p Code usually easier to reason on and debug
-    h3 cons
-    p Performance can suffer (especially on large structures)
+  //- section
+  //-   h2 Immutable pros/cons
+  //-   h3 pros
+  //-   p Code usually easier to reason on and debug
+  //-   h3 cons
+  //-   p Performance can suffer (especially on large structures)
 
   section
     h2 Mutability in Elixir
@@ -446,5 +452,4 @@ section
   ul
     li Functional programming has plenty of useful concepts
     li Elixir uses and implements many of these
-    li State can be modeled using servers and message passing
-    li.fragment Do not implement your own <code>GenServer</code>
+    li State can be modeled using processes and message passing
